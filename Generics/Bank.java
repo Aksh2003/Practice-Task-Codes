@@ -35,12 +35,18 @@ public class Bank<T extends Account> {
                 System.out.println(account);
             }
         }
+        /* Using Stream API
+            accounts.values().stream().filter(account.getBalance() > balanceThreshold).forEach(System.out::println);
+         */
     }
     
     public static <T> T[] printAndReturnArray(T[] array) {
         for (T element : array) {
             System.out.println(element);
         }
+        /* Using Stream API
+            Arrays.stream(array).forEach(System.out::println);
+         */
         return array;
     }
         public static void main(String[] args) {
