@@ -130,7 +130,6 @@ public class Banking {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ExecutorService executor = Executors.newSingleThreadExecutor();
         ScheduledExecutorService scheduledExecutor = Executors.newScheduledThreadPool(1);
         
         Map<String, Account> accounts = new HashMap<>();
@@ -189,8 +188,8 @@ public class Banking {
                         break;
                 }  
 
-            executor.shutdown();
-            scheduledExecutor.shutdown();
+            scheduledExecutor.shutdown();  
+            scheduledExecutor.awaitTermination(10,TimeUnit.SECONDS);    
             account.printTransactionHistory();
 
         } catch (Exception e) {
