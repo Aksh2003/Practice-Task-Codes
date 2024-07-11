@@ -3,18 +3,18 @@ import java.util.*;
     protected String name;
     protected String accountNumber;
     protected double balance;
-    protected List<Transaction> transaction_history;
+    protected List<Transaction> transactionHistory;
 
     public Account(String name, String accountNumber, double balance) {
         this.name = name;
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.transaction_history = new ArrayList<>();
+        this.transactionHistory = new ArrayList<>();
     }
 
     public void deposit(double amount) {
         balance += amount;
-        transaction_history.add(new Transaction(new Date(), "Deposit", amount));
+        transactionHistory.add(new Transaction(new Date(), "Deposit", amount));
     }
 
     public abstract void withdraw(double amount) throws InsufficientBalanceException, MaxWithdrawalException;
@@ -24,7 +24,7 @@ import java.util.*;
     }
 
     public void printTransactionHistory() {
-        for (Transaction t : transaction_history) {
+        for (Transaction t : transactionHistory) {
             System.out.println(t);
         }
     }
@@ -33,7 +33,7 @@ import java.util.*;
 }
 
 class SavingsAccount extends Account {
-    private final double interest_rate = 0.05;
+    private static final double interest_rate = 0.05;
     private static final double MAX_WITHDRAWAL_AMOUNT = 2000.00;
     public SavingsAccount(String name, String accountNumber, double balance) {
         super(name, accountNumber, balance);
@@ -47,7 +47,7 @@ class SavingsAccount extends Account {
                 throw new InsufficientBalanceException("Insufficient balance.");
             }
             balance -= amount;
-            transaction_history.add(new Transaction(new Date(), "Withdrawal", amount));
+            transactionHistory.add(new Transaction(new Date(), "Withdrawal", amount));
         }
         catch(InsufficientBalanceException |MaxWithdrawalException e )
         {
@@ -72,7 +72,7 @@ class SavingsAccount extends Account {
 }
 
 class CurrentAccount extends Account {
-    private final double min_balance = 1000.00;
+    private static final double min_balance = 1000.00;
     private static final double MAX_WITHDRAWAL_AMOUNT = 5000.00;
     public CurrentAccount(String name, String accountNumber, double balance) {
         super(name, accountNumber, balance);
@@ -87,7 +87,7 @@ class CurrentAccount extends Account {
             throw new InsufficientBalanceException("Minimum balance requirement not met.");
         }
         balance -= amount;
-        transaction_history.add(new Transaction(new Date(), "Withdrawal", amount));
+        transactionHistory.add(new Transaction(new Date(), "Withdrawal", amount));
     }
 
    
