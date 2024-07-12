@@ -33,6 +33,8 @@ abstract class Account {
             BufferedWriter writer = new BufferedWriter(new FileWriter(transactionFile, true));
             writer.write(transaction.toString());
             writer.newLine();
+            writer.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
