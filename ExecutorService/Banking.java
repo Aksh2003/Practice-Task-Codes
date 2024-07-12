@@ -188,7 +188,7 @@ public class Banking {
                         break;
                 }  
 
-            scheduledExecutor.shutdown();  
+           
             scheduledExecutor.awaitTermination(10,TimeUnit.SECONDS);    
             account.printTransactionHistory();
 
