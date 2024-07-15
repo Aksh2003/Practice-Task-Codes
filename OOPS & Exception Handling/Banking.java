@@ -1,4 +1,19 @@
 import java.util.*;
+enum MaxWithdrawalAmount {
+    SAVINGS(2000.00),
+    CURRENT(5000.00);
+
+    private final double amount;
+
+    MaxWithdrawalAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+}
+
  abstract class Account {
     protected String name;
     protected String accountNumber;
@@ -16,6 +31,7 @@ import java.util.*;
     public void deposit(double amount) {
         balance += amount;
         transactionHistory.add(new Transaction(new Date(), "Deposit", amount));
+        System.out.println();
     }
 
     public abstract void withdraw(double amount) throws InsufficientBalanceException, MaxWithdrawalException;
@@ -34,14 +50,13 @@ import java.util.*;
 }
 
 class SavingsAccount extends Account {
-    private static final double interest_rate = 0.05;
-    private static final double MAX_WITHDRAWAL_AMOUNT = 2000.00;
+    private static final double INTEREST_RATE = 0.05;
     public SavingsAccount(String name, String accountNumber, double balance) {
         super(name, accountNumber, balance);
     }
     public void withdraw(double amount) throws InsufficientBalanceException, MaxWithdrawalException {
         try{
-            if (amount > MAX_WITHDRAWAL_AMOUNT) {
+            if (amount > MaxWithdrawalAmount.SAVINGS.getAmount()) {
                 throw new MaxWithdrawalException("Withdrawal amount exceeds the maximum limit for Savings Account.");
             }
             if (amount > balance) {
@@ -68,23 +83,22 @@ class SavingsAccount extends Account {
         System.out.println("Name: " + name);
         System.out.println("Account Number: " + accountNumber);
         System.out.println("Balance: " + balance);
-        System.out.println("Interest Rate: " + interest_rate);
+        System.out.println("Interest Rate: " + INTEREST_RATE);
     }
 }
 
 class CurrentAccount extends Account {
-    private static final double min_balance = 1000.00;
-    private static final double MAX_WITHDRAWAL_AMOUNT = 5000.00;
+    private static final double MIN_BALANCE = 1000.00;
     public CurrentAccount(String name, String accountNumber, double balance) {
         super(name, accountNumber, balance);
     }
 
 
     public void withdraw(double amount) throws InsufficientBalanceException, MaxWithdrawalException {
-        if (amount > MAX_WITHDRAWAL_AMOUNT) {
+        if (amount > MaxWithdrawalAmount.CURRENT.getAmount()) {
             throw new MaxWithdrawalException("Withdrawal amount exceeds the maximum limit for Current Account.");
         }
-        if (balance - amount < min_balance) {
+        if (balance - amount < MIN_BALANCE) {
             throw new InsufficientBalanceException("Minimum balance requirement not met.");
         }
         balance -= amount;
@@ -97,7 +111,7 @@ class CurrentAccount extends Account {
         System.out.println("Name: " + name);
         System.out.println("Account Number: " + accountNumber);
         System.out.println("Balance: " + balance);
-        System.out.println("Minimum Balance Requirement: " + min_balance );
+        System.out.println("Minimum Balance Requirement: " + MIN_BALANCE );
     }
 }
 
