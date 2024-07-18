@@ -1,0 +1,28 @@
+use social_network
+
+// Create users collection and insert data
+db.users.insertMany([
+    { username: "alice_smith", email: "alice@example.com", address: "123 Main St, New York" },
+    { username: "bob_jones", email: "bob@example.com", address: "456 Elm St, Los Angeles" },
+    { username: "charlie_doe", email: "charlie@example.com", address: "789 Oak St, Chicago" },
+    { username: "diana_williams", email: "diana@example.com", address: "567 Pine St, San Francisco" },
+    { username: "eve_anderson", email: "eve@example.com", address: "890 Maple St, Seattle" }
+]);
+
+// Create posts collection and insert data
+db.posts.insertMany([
+    { username: "alice_smith", title: "Hello, World!", description: "First post on this social network.", comments: [] },
+    { username: "bob_jones", title: "My Thoughts", description: "Sharing my thoughts with everyone.", comments: [] },
+    { username: "charlie_doe", title: "Travel Adventures", description: "Recapping my recent travel adventures.", comments: [] },
+    { username: "diana_williams", title: "Tech Update", description: "Latest tech news and updates.", comments: [] },
+    { username: "eve_anderson", title: "Foodie Corner", description: "Exploring the local food scene.", comments: [] }
+]);
+
+// Create friends collection and insert data
+db.friends.insertMany([
+    { username: "alice_smith", friendslist: ["bob_jones", "charlie_doe"] },
+    { username: "bob_jones", friendslist: ["alice_smith", "diana_williams"] },
+    { username: "charlie_doe", friendslist: ["alice_smith", "eve_anderson"] },
+    { username: "diana_williams", friendslist: ["bob_jones", "charlie_doe"] },
+    { username: "eve_anderson", friendslist: ["charlie_doe", "diana_williams"] }
+]);
