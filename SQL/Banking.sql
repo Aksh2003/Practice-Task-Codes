@@ -5,7 +5,6 @@ CREATE TABLE Employee (
     address VARCHAR(255)
 );
 
--- Create customer table
 CREATE TABLE Customer (
     RegisterId int PRIMARY KEY,
     name VARCHAR(100),
@@ -13,7 +12,6 @@ CREATE TABLE Customer (
     address VARCHAR(255)
 );
 
--- Create user table
 CREATE TABLE User (
     RegisterId int PRIMARY KEY,
     password VARCHAR(100)
@@ -41,13 +39,11 @@ CREATE TABLE AccountType (
     CONSTRAINT chk_account_type CHECK (type IN ('Savings', 'Current'))
 );
 
--- Create bank table
 CREATE TABLE Bank (
     bank_id INT PRIMARY KEY,
     bank_name VARCHAR(100)
 );
 
--- Create branch table
 CREATE TABLE Branch (
     branch_id INT PRIMARY KEY,
     bank_id INT,
@@ -69,7 +65,7 @@ CREATE TABLE Transaction (
 
 DROP TABLE IF EXISTS Transaction;
 
--- Create the Transaction table with auto-incremented tid and constraints
+
 CREATE TABLE Transaction (
     tid INT AUTO_INCREMENT PRIMARY KEY,
     accid INT,
@@ -108,7 +104,7 @@ VALUES (1, 'First Bank'),
 INSERT INTO Branch (branch_id, bank_id, branch_name, address)
 VALUES (201, 1, 'Main Branch', '10 Broad St'),
        (202, 1, 'West Branch', '20 Oak St'),
-       (301, 2, 'Downtown Branch', '30 Pine St');
+       (301, 2, 'Chennai', '30 Pine St');
 
 -- Insert into AccountType table
 INSERT INTO AccountType (branch_id, interest_rate, max_withdrawal_amount, min_balance, type)
@@ -126,12 +122,7 @@ VALUES (1, 101, 1, 201, 5000.00, 'Savings'),
        (3, 101, 2, 301, 7000.00, 'Savings'),
        (4, 102, 2, 301, 10000.00, 'Current');
 
--- Insert into Transaction table
-INSERT INTO Transaction (tid, accid, date, amount, type)
-VALUES (1, 1, '2023-01-15', 1000.00, 'Deposit'),
-       (2, 2, '2023-01-20', 500.00, 'Withdrawal'),
-       (3, 3, '2023-01-25', 2000.00, 'Deposit'),
-       (4, 4, '2023-01-30', 1500.00, 'Withdrawal');
+
 
 -- Fetch the first three accounts with the highest balance
 SELECT *
@@ -253,7 +244,10 @@ DELIMITER ;
 CALL TransferAmount(1, 2, 500.00);
 
 
+--- creating index
+
+CREATE INDEX idx_customer_email ON Customer(email);
+CREATE INDEX idx_employee_email ON Employee(email);
 
 
-
-
+CREATE INDEX idx_account_customerID_branchID ON Account(custid,branch_id);
